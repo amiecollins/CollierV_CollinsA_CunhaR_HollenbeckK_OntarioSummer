@@ -43,7 +43,7 @@ var default_categories = [
             "culture",
             "art",
             "history",
-            "experience"
+            "experiences"
         ],
         img_url: "/images/family.jpg"
     },
