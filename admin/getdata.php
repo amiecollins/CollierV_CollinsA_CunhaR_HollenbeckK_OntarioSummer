@@ -1,9 +1,9 @@
 <php?
 
     function get_file($table) {
-        $con = mysqli_connect('localhost','root','root','db_ontariosummer');
+        $con = mysqli_connect('localhost','root','','db_ontariosummer');
         if (!$con) {
-            die('Could not connect: ' . mysqli_error($con));
+            die("SQL ERROR: ". mysqli_error($con));
         }
 
         $sql="SELECT * FROM ".table;

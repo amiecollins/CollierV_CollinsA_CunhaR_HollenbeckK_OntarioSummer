@@ -19,7 +19,6 @@ var keywords = [
     "art",
     "history",
     "shopping",
-    "campsites",
     "food",
     "culture",
     "cannabis",
@@ -118,12 +117,13 @@ var default_categories = [
     }
 ];
 
+var categories = search.
+
 const vueIndex = (() => {
 
     let vm = new Vue({
         data: {
-            categories: default_cat,
-            selected_cat: null,
+            selected_category: null,
             user: null
         },
         
@@ -141,7 +141,7 @@ const vueIndex = (() => {
                         
                         return collection;
                     }
-                    if (user != null) {
+                    if (user !== null) {
                         var results = search.getResultbyUser(10, categories, user, query);
                     } else {
                         var results = search.getResultbyCat(cat, categories, user, query);
