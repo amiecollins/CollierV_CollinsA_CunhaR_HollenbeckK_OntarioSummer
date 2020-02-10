@@ -141,10 +141,12 @@ const vueIndex = (() => {
                         
                         return collection;
                     }
-                    if (user !== null) {
+                    if (selected_category !== null && user === null) {
+                        var results = search.getResultbyCat(selected_category, categories, user, query);
+                    } else if (user !== null && selected_category === null) {
                         var results = search.getResultbyUser(10, categories, user, query);
-                    } else {
-                        var results = search.getResultbyCat(cat, categories, user, query);
+                    } else if (user !== null && selected_category !== null) {
+                        var results = 
                     }
                     return results;
                 } else {
