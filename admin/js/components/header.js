@@ -1,11 +1,12 @@
 import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.esm.browser.js'
-import search from './components/search.js'
+import search from './search.js'
+import attraction_cpnt from './attraction.js'
 
 export default {
     data: function () {
         return {
-            search_query = "",
-            search_results = null
+            search_query: "",
+            search_results: null
         }
     },
 
@@ -27,6 +28,10 @@ export default {
 
     },
 
+    componets: {
+        attraction_cpnt
+    },
+
     template: `
     
     <section class="top-bar">
@@ -40,16 +45,9 @@ export default {
         <form><input type="text" class="search-bar" v-model="search_query" v-on:keyup="search(search_query)"></form>
         <template v-if="search_query !== "" && search_results !== null" class="search-results">
         <div class="search_title">Search Results for <span class="accent">{{ search_query }}</span></div>
-            <div v-for="result in search_results">
-
-                <img :src="result.img_url" :alt="result.name + 'photo'" class="user-image">
-                <div>
-                    <div class="result_title">{{ result.name }}</div>
-                    <div class="result_location">located in: {{ result.city }}, ON</div>
-                </div>
-
-            </div>
-
+        <div v-for="result in search_results">
+            <attraction_cmpt v-bind:attraction="result"></attraction_cmpt>
+        </div>
         </template><template v-else="search_query !== "" && search_results === null" class="search-results">
             <div class="search_title">No Search Results Found for <span class="accent">{{ search_query }}</span></div>
         </template>

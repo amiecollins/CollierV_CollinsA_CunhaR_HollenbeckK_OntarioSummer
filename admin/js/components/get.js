@@ -1,21 +1,18 @@
-import get from '../../getdata.php'
+export default function(query) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.overrideMimeType("application/json");
 
-export function getTable(query) {
-    if (query.length == 0) {
-        return null;
-    } else {
-        if (window.XMLHttpRequest) {
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            var result = xmlhttp.responseText;
+            
+            console.log(result);
         }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var result = JSON.parse(get.get_file(query));
-                return result;
-            }
-        };
-        xmlhttp.open("GET", query, true);
-        xmlhttp.send();
     }
+    var data = "/admin/getdata.php";
+    xmlhttp.open("GET", data, true);
+    
+
+    xmlhttp.send();
+
 }

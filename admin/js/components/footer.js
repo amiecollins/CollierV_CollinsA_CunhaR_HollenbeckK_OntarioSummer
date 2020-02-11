@@ -11,5 +11,8 @@ export default {
 
     },
 
-    template: ``
+    template: `
+    
+    
+    `
 }

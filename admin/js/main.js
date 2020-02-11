@@ -4,6 +4,8 @@ import footer_cpnt from './components/footer.js'
 import category_cpnt from './components/category.js'
 import subcategory_cpnt from './components/subcategory.js'
 import search from './components/search.js'
+import login_cmpt from './components/login.js'
+import register_cmpt from './components/register.js'
 
 const vueIndex = (() => {
 
@@ -11,12 +13,33 @@ const vueIndex = (() => {
         data: {
             selected_category: null,
             user: null,
-            data: null
+            selected_attraction: null,
+            selected_keyword: null,
+            home_images: {
+                hero: {
+                    img_url: "",
+                    alt: ""
+                },
+                category_images: [
+                    {
+                        img_url: "",
+                        alt: ""
+                    },
+                    {
+                        img_url: "",
+                        alt: ""
+                    },
+                    {
+                        img_url: "",
+                        alt: ""
+                    }
+                ]
+            }
         },
         
         methods: {
 
-            getData() {
+            getAttractions() {
 
                 if (selected_category !== null && user === null) {
                     var results = search.getByCategory(selected_category);
@@ -25,9 +48,15 @@ const vueIndex = (() => {
                 } else if (user !== null && selected_category !== null) {
                     var results = search.mergeCategories(user, search.geByCategory(selected_category));
                 } else {
-                    return null;
+                    var results = null;
                 }
+                
+            },
 
+            getCategories() {
+                var category_names = "Family Fun, Luxury Getaway, Wilderness Exploration, History &amp; Culture, Business";
+                var results = search.getCategories(category_names);
+                return results;
             }
         },
 
@@ -36,7 +65,10 @@ const vueIndex = (() => {
             header_cpnt,
             footer_cpnt,
             category_cpnt,
-            subcategory_cpnt
+            subcategory_cpnt,
+            login_cmpt,
+            register_cmpt
+
         }
 
     }).$mount("#main");

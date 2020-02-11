@@ -7,12 +7,39 @@ var keywords_master = get("tbl_keywords");
 function queryBreaker(query){    
     // take out all characters that might mess with system, set to lower case (data checked will be set to lowercase as well)
     query = query.replace(/[^a-zA-Z0-9]/g, "");
+    query = query.replace(", ", ",");
     query = query.toLowerCase();
-    query = query.split(" ");
+    query = query.split(",");
     return query;
 }
 
-function getKeywords(string) {
+function getCategory(category_name) {
+    if (category_name !== null) {
+        for (var i = 0; i < categories.length; i++) {
+            if (category_name === categories[i].name) {
+                return categories[i];
+            }
+        }
+        return null;
+    } else {
+        return null;
+    }
+}
+
+export function getCategories(cats) {
+    if (cats !== null) {
+        var cats_data = queryBreaker(cats);
+        var results = [];
+        for (var i = 0; i < cats_data.length; i++) {
+            results.push(getCategory(cats_data[i]));
+        }
+        return results;
+    } else {
+        return null;
+    }
+}
+
+export function getKeywords(string) {
     keywords = queryBreaker(string);
     var results = [];
     for (var i = 0; i < keywords.length; i++) {
@@ -50,19 +77,19 @@ function addRelevanceColumn(data) {
     return data;
 }
 
-function getByUser(user) {
+export function getByUser(user) {
 
     var results = [ ];
     if (user !== null) {
         var keywords = getKeywords(user.keywords);
         for (var i = 0; i < keywords.length; i++) {
-            results.push(getKeywordData(keywords[i]));
+            results.push(getSubcategory(keywords[i]));
         }
     }
     return results;
 }
 
-function searchByString(total, query) {
+export default function searchByString(total, query) {
 
     query = queryBreaker(query);
 
@@ -91,59 +118,44 @@ function searchByString(total, query) {
     return data.slice(0, total-1);
 }
 
-
-
-// finish writing getCategory and make a page!
-
-
-
-function getCategory(category_name) {
-    if (category_name !== null) {
-        for (var i = 0; i < categories.length; i++) {
-            if (category_name === categories[i].name) {
-                return categories[i];
-            }
-        }
-        return null;
-    } else {
-        return null;
-    }
-}
-
 function getByCategory(cat) {
     var results = [ ];
     var category = getCategory(cat);
     if (category !== null) {
         var keywords = getKeywords(category.keywords);
         for (var i = 0; i < keywords.length; i++) {
-            results.push(getKeywordData(keywords[i]));
+            results.push(getSubcategory(keywords[i]));
         }
     }
     return results;
 }
 
-function getKeywordData(keyword) {
+function getSubcategory(keyword) {
     if (keyword !== null) {
 
-        var results = [ ];
+        var results = [];
 
         for (var i = 0; i < attractions.length; i++) {
+            var key_attractions = [];
             var keywords = getKeywords(attractions[i].keywords);
             for (var x = 0; x < keywords.length; i++) {
                 if (keywords[x] === keyword) {
-                    results.push(attractions[i]);
+                    key_attractions.push(attractions[i]);
                 } else {
                     // check other keywords that match attraction
                     doublecheck = queryBreaker(keywords[x].aka);
                     for (var z = 0; z < doublecheck.length; z++) {
                         if (keyword === doublecheck[z]) {
-                            results.push(attractions[i]);
+                            key_attractions.push(attractions[i]);
                         }
                     }
                 }
+            var subcategory = getSubcategory(keywords[x]);
+            subcategory.attractions = key_attractions;
+            results.push(subcategory);
             }
         }
-
+        
         return results;
     } else {
 
@@ -161,7 +173,7 @@ function sortResults(unsorted, key) {
 
 }
 
-function mergeCategories(userdata, categorydata) {
+export function mergeCategories(userdata, categorydata) {
 
     var results = addRelevanceColumn(categorydata);
     if (userdata.email !== null && categorydata !== null) {
