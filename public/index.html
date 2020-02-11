@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/css/main.css">
+</head>
+<body><div id="main">
+    
+    <header><header_cpnt v-bind:user="user"></header_cpnt></header>
+
+    <section class="hero" :style="'background-image:url(' + home_images.hero.img_url + ');'">
+        <h2 class="hidden">Welcome to your Ontario Summer</h2>
+        <div class="home-images">
+            <div v-for="image in home_images.category_images">
+                <img class="home-image" :src="image.img_url" :alt="image.alt">
+            </div>
+        </div>
+    </section>
+
+    <!-- categories -->
+    <template v-if="user === null && selected_category === null">
+        <div v-for="cat in getCategories"><category_cpnt v-bind:category_data="cat" v-on:click="selected_category = cat.name"></category_cpnt></div>
+    </template>
+
+    <!-- list of attractions -->
+    <template v-else="selected_category !== null">
+        <div v-for="subcategory in getAttractions">
+            <subcategory_cmpt v-bind:keyword="subcategory" v-bind:category_class="selected_category.name" v-on:click="selected_keyword = keyword"></subcategory_cmpt>
+        </div>
+    </template>
+    
+    <!-- login / register -->
+    <template v-else="user === null">
+        <section class="login">
+            <h4 class="hidden">Login to Ontario Summer</h4>
+            <login_cmpt></login_cmpt>
+        </section>
+        <section class="register">
+            <h4 class="hidden">Register to Ontario Summer</h4>
+            <register_cmpt></register_cmpt>
+        </section>
+    </template>
+
+    <footer><footer_cpnt></footer_cpnt></footer>
+
+</div></body>
+
+<script src="../admin/js/main.js" type="module"></script>
+</html>
