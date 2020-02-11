@@ -1,4 +1,5 @@
 # Welcome to Ontario Summer page
+![ontario-summer-logo2](https://user-images.githubusercontent.com/43183038/74216767-69e84080-4c73-11ea-805c-69477f7a177f.png)
 
 
 ## Credits
