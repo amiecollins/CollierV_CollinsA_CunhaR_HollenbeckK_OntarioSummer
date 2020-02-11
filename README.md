@@ -1,6 +1,5 @@
 # Welcome to Ontario Summer page
-![ontario-summer-logo2](https://user-images.githubusercontent.com/43183038/74216767-69e84080-4c73-11ea-805c-69477f7a177f.png)
-
+![ontario-summer-logo2](https://user-images.githubusercontent.com/43183038/74216817-9308d100-4c73-11ea-88be-0f182b3084c4.png)
 
 ## Credits
 - [Amie Collins](https://github.com/amiecollins)- Developer
